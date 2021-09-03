@@ -12,7 +12,25 @@
         "Good day",
         "Whats up"
       ],
-      "responses": ["Hello!, how can I help", "Hi there, how can I help?"],
+      "responses": [
+        "Hello!, how can I help you? Are you having Hardware or Software problems?"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "software",
+      "patterns": [
+        "software is not working",
+        "software is down",
+        "software",
+        "the application is not running",
+        "application is down",
+        "programm is not working"
+      ],
+      "responses": [
+        "Oh, that's not good, but let's try to solve this.",
+        "We offer a wide range of both hard and software"
+      ],
       "context_set": ""
     },
     {
@@ -59,20 +77,6 @@
       "patterns": ["What kind of hardware do you have", "what do you offer"],
       "responses": [
         "We sell soft- and hardware solutions tailored to you",
-        "We offer a wide range of both hard and software"
-      ],
-      "context_set": ""
-    },
-    {
-      "tag": "software",
-      "patterns": [
-        "What software do you have",
-        "whats on the menu",
-        "what do you reccommend?",
-        "what do you sell?"
-      ],
-      "responses": [
-        "We offer a wide array of virtual machines",
         "We offer a wide range of both hard and software"
       ],
       "context_set": ""
