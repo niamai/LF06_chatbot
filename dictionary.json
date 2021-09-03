@@ -1,0 +1,103 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "hey",
+        "moin",
+        "How are you",
+        "Is anyone there?",
+        "Hello",
+        "Good day",
+        "Whats up"
+      ],
+      "responses": ["Hello!, how can I help", "Hi there, how can I help?"],
+      "context_set": ""
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "cya",
+        "See you later",
+        "Goodbye",
+        "I am Leaving",
+        "Have a Good day"
+      ],
+      "responses": ["Bye", "Talk to you later", "Goodbye!"],
+      "context_set": ""
+    },
+    {
+      "tag": "name",
+      "patterns": [
+        "what is your name",
+        "what should I call you",
+        "whats your name?"
+      ],
+      "responses": [
+        "You can call me LF-Bot.",
+        "I'm LF-Bot!",
+        "I'm Tim aka Tech With LF-Bot."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "shop",
+      "patterns": [
+        "Id like to buy something",
+        "what do you reccommend?",
+        "what do you sell?"
+      ],
+      "responses": [
+        "We sell soft- and hardware solutions tailored to you",
+        "We offer a wide range of both hard and software"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "hardware",
+      "patterns": ["What kind of hardware do you have", "what do you offer"],
+      "responses": [
+        "We sell soft- and hardware solutions tailored to you",
+        "We offer a wide range of both hard and software"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "software",
+      "patterns": [
+        "What software do you have",
+        "whats on the menu",
+        "what do you reccommend?",
+        "what do you sell?"
+      ],
+      "responses": [
+        "We offer a wide array of virtual machines",
+        "We offer a wide range of both hard and software"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "hours",
+      "patterns": [
+        "when can I reach the hotline",
+        "hotline hours",
+        "hours of operation"
+      ],
+      "responses": ["The support hotline is open from 7am until 20pm"],
+      "context_set": ""
+    },
+    {
+      "tag": "broken",
+      "patterns": [
+        "My Computer is broken",
+        "PC doesnt work",
+        "Your software is not working"
+      ],
+      "responses": [
+        "If reseting the device or restarting the software doesnt work, please create a ticket on www.it-solutions.com/support"
+      ],
+      "context_set": ""
+    }
+  ]
+}

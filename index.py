@@ -1,37 +1,145 @@
-# der Benutzer erhält eine Begrüßung
-print("Herzlichen Dank für die Nutzung der ScooTeq E-Roller!")
+import nltk
+from nltk.stem.lancaster import LancasterStemmer
+stemmer = LancasterStemmer()
+
+import numpy
+import tflearn
+import tensorflow
+import random
+import json
+import pickle
+
+with open("dictionary.json") as file:
+    data = json.load(file)
+
+try:
+    with open("data.pickle", "rb") as f:
+        words, labels, training, output = pickle.load(f)
+except:
+    words = []
+    labels = []
+    docs_x = []
+    docs_y = []
+
+    for intent in data["intents"]:
+        for pattern in intent["patterns"]:
+            wrds = nltk.word_tokenize(pattern)
+            words.extend(wrds)
+            docs_x.append(wrds)
+            docs_y.append(intent["tag"])
+
+        if intent["tag"] not in labels:
+            labels.append(intent["tag"])
+
+    words = [stemmer.stem(w.lower()) for w in words if w != "?"]
+    words = sorted(list(set(words)))
+
+    labels = sorted(labels)
+
+    training = []
+    output = []
+
+    out_empty = [0 for _ in range(len(labels))]
+
+    for x, doc in enumerate(docs_x):
+        bag = []
+
+        wrds = [stemmer.stem(w.lower()) for w in doc]
+
+        for w in words:
+            if w in wrds:
+                bag.append(1)
+            else:
+                bag.append(0)
+
+        output_row = out_empty[:]
+        output_row[labels.index(docs_y[x])] = 1
+
+        training.append(bag)
+        output.append(output_row)
 
 
-def check_is_digit(input_str):
-    if not input_str.isdigit():
-        check_is_digit(input("Geben Sie bitte eine glatte Zahl ein: "))
-    else:
-        global correct_input
-        correct_input = input_str
+    training = numpy.array(training)
+    output = numpy.array(output)
+
+    with open("data.pickle", "wb") as f:
+        pickle.dump((words, labels, training, output), f)
+
+tensorflow.reset_default_graph()
+
+net = tflearn.input_data(shape=[None, len(training[0])])
+net = tflearn.fully_connected(net, 8)
+net = tflearn.fully_connected(net, 8)
+net = tflearn.fully_connected(net, len(output[0]), activation="softmax")
+net = tflearn.regression(net)
+
+model = tflearn.DNN(net)
+
+try:
+    model.load("model.tflearn")
+except:
+    model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
+    model.save("model.tflearn")
+
+    def bag_of_words(s, words):
+        bag = [0 for _ in range(len(words))]
+
+        s_words = nltk.word_tokenize(s)
+        s_words = [stemmer.stem(word.lower()) for word in s_words]
+
+        for se in s_words:
+            for i, w in enumerate(words):
+                if w == se:
+                    bag[i] = 1
+            
+        return numpy.array(bag)
 
 
-# der Benutzer soll die Länge der Fahrt in Metern eingeben
-check_is_digit(input(
-    "Bitte tragen Sie ein, wie viele Meter Sie gefahren sind: "))
-distanz = correct_input
+def chat():
+    print("Start talking with the bot (type quit to stop)!")
+    while True:
+        inp = input("You: ")
+        if inp.lower() == "quit":
+            break
 
-# der Benutzer soll die Dauer der Fahrt in Minuten eingeben
-check_is_digit(input(
-    "Bitte tragen Sie ein, wie viele Minuten Sie gefahren sind: "))
-zeit = correct_input
+        results = model.predict([bag_of_words(inp, words)])
+        results_index = numpy.argmax(results)
+        tag = labels[results_index]
 
-# Berechnung des Preises in Eurocent.
-if zeit.isdigit() and distanz.isdigit():
-    preis_cent = (float(distanz) * 0.2 + int(zeit) * 10) / 100
-    preis_cent = str("{:.2f}".format(preis_cent))
-    preis_euro = preis_cent.replace(".", ",")
+        for tg in data["intents"]:
+            if tg['tag'] == tag:
+                responses = tg['responses']
 
-#  Überprüfung, ob es nur eine Minute ist
-if zeit == "1":
-    minute = "Minute"
-else:
-    minute = "Minuten"
+        print(random.choice(responses))
 
-# Preis wird zurueckgegeben
-print("Sie sind", distanz, "Meter und", zeit, minute,
-      "gefahren. Somit ergibt sich ein Preis von:",  preis_euro + "€.")
+chat()
+
+##################
+
+# random_answers = ['Interressant...', 'Ich verstehe...',
+#                   'Leider habe ich keine antwort darauf.']
+# intent_answers = {'hallo': 'Hallo',
+#                   'vertretungsplan': 'Der Vertretungsplan der Itech',
+#                   'öffnungszeiten': 'Das Schulbuero hat an folgenden zeiten geöffnet 7-12'}
+
+# print('Willkommen zum Chatbot')
+# print('Wie kann ich ihnen helfen?')
+# print('Wenn sie das Programm beenden möchten schreiben sie "bye"')
+
+# user_input = ''
+
+# while user_input != 'bye':
+#     user_input = ''
+#     while user_input == '':
+#         user_input = input('Ihre Frage/Antwort: ')
+
+#     user_input = user_input.lower()
+#     user_words = user_input.split()
+
+#     for words in user_words:
+#         if words in intent_answers:
+#             print(intent_answers[words])
+#         else:
+#             print(random.choice(random_answers))
+
+# print('Einen schoenen Tag noch.')
