@@ -99,10 +99,8 @@ def bag_of_words(s, words):
 
 
 def chat():
+    print("\n")
     print("Start talking with the bot (type quit to stop)!")
-    print('Willkommen zum Chatbot')
-    print('Wie kann ich ihnen helfen?')
-    print('Wenn sie das Programm beenden möchten schreiben sie "bye"')
     while True:
         inp = input("You: ")
         if inp.lower() == "quit":
