@@ -84,65 +84,38 @@ except:
     model.save("model.tflearn")
     print("Model is being created")
 
-#     def bag_of_words(s, words):
-#         bag = [0 for _ in range(len(words))]
+def bag_of_words(s, words):
+    bag = [0 for _ in range(len(words))]
 
-#         s_words = nltk.word_tokenize(s)
-#         s_words = [stemmer.stem(word.lower()) for word in s_words]
+    s_words = nltk.word_tokenize(s)
+    s_words = [stemmer.stem(word.lower()) for word in s_words]
 
-#         for se in s_words:
-#             for i, w in enumerate(words):
-#                 if w == se:
-#                     bag[i] = 1
+    for se in s_words:
+        for i, w in enumerate(words):
+            if w == se:
+                bag[i] = 1
             
-#         return numpy.array(bag)
+    return numpy.array(bag)
 
 
-# def chat():
-#     print("Start talking with the bot (type quit to stop)!")
-#     while True:
-#         inp = input("You: ")
-#         if inp.lower() == "quit":
-#             break
+def chat():
+    print("Start talking with the bot (type quit to stop)!")
+    print('Willkommen zum Chatbot')
+    print('Wie kann ich ihnen helfen?')
+    print('Wenn sie das Programm beenden möchten schreiben sie "bye"')
+    while True:
+        inp = input("You: ")
+        if inp.lower() == "quit":
+            break
 
-#         results = model.predict([bag_of_words(inp, words)])
-#         results_index = numpy.argmax(results)
-#         tag = labels[results_index]
+        results = model.predict([bag_of_words(inp, words)])
+        results_index = numpy.argmax(results)
+        tag = labels[results_index]
 
-#         for tg in data["intents"]:
-#             if tg['tag'] == tag:
-#                 responses = tg['responses']
+        for tg in data["intents"]:
+            if tg['tag'] == tag:
+                responses = tg['responses']
 
-#         print(random.choice(responses))
+        print(random.choice(responses))
 
-# chat()
-
-##################
-
-# random_answers = ['Interressant...', 'Ich verstehe...',
-#                   'Leider habe ich keine antwort darauf.']
-# intent_answers = {'hallo': 'Hallo',
-#                   'vertretungsplan': 'Der Vertretungsplan der Itech',
-#                   'öffnungszeiten': 'Das Schulbuero hat an folgenden zeiten geöffnet 7-12'}
-
-# print('Willkommen zum Chatbot')
-# print('Wie kann ich ihnen helfen?')
-# print('Wenn sie das Programm beenden möchten schreiben sie "bye"')
-
-# user_input = ''
-
-# while user_input != 'bye':
-#     user_input = ''
-#     while user_input == '':
-#         user_input = input('Ihre Frage/Antwort: ')
-
-#     user_input = user_input.lower()
-#     user_words = user_input.split()
-
-#     for words in user_words:
-#         if words in intent_answers:
-#             print(intent_answers[words])
-#         else:
-#             print(random.choice(random_answers))
-
-# print('Einen schoenen Tag noch.')
+chat()
