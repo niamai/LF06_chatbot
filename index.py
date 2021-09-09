@@ -102,7 +102,8 @@ def bag_of_words(s, words):
 
 def chat():
     print("\n")
-    print("Start talking with the bot (type quit to stop)!")
+    print("Welcome to the IT sollutions chatbot for printer issues.")
+    print("How can I help you? ex. My printer is jammed.")
     while True:
         inp = input("You: ")
         if inp.lower() == "quit":
