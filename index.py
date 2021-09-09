@@ -3,7 +3,6 @@ nltk.download('punkt')
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 
-from pathlib import Path
 import numpy
 import tflearn
 import tensorflow
