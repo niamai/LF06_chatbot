@@ -101,7 +101,7 @@ def chat():
     print("\n")
     print("Welcome to the IT solutions chatbot for printer issues.")
     print("How can I help you?")
-    print("Example: My printer is jammed. (type quit to exit)")
+    print("Example: paper is jammed. (type quit to exit)")
     while True:
         inp = input("You: ")
         if inp.lower() == "quit":
@@ -111,7 +111,7 @@ def chat():
         results_index = numpy.argmax(results)
         tag = labels[results_index]
 
-        if results[results_index] > 0.8:
+        if results[results_index] > 0.65:
             for tg in data["intents"]:
                 if tg['tag'] == tag:
                     responses = tg['responses']
