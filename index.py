@@ -99,7 +99,7 @@ def bag_of_words(s, words):
 
 def chat():
     print("\n")
-    print("Welcome to the IT sollutions chatbot for printer issues.")
+    print("Welcome to the IT solutions chatbot for printer issues.")
     print("How can I help you?")
     print("Example: My printer is jammed. (type quit to exit)")
     while True:
@@ -107,14 +107,16 @@ def chat():
         if inp.lower() == "quit":
             break
 
-        results = model.predict([bag_of_words(inp, words)])
+        results = model.predict([bag_of_words(inp, words)])[0]
         results_index = numpy.argmax(results)
         tag = labels[results_index]
 
-        for tg in data["intents"]:
-            if tg['tag'] == tag:
-                responses = tg['responses']
-
-        print(random.choice(responses))
+        if results[results_index] > 0.8:
+            for tg in data["intents"]:
+                if tg['tag'] == tag:
+                    responses = tg['responses']
+            print(random.choice(responses))
+        else:
+            print(random.choice(["I'm sorry, I do not understand. Please ask again.","Please try rephrasing your question, I do not know what you mean.", "I'm sorry, but I can't answer that. Try again please."]))
 
 chat()
