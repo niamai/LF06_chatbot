@@ -59,7 +59,6 @@ except:
         training.append(bag)
         output.append(output_row)
 
-
     training = numpy.array(training)
     output = numpy.array(output)
 
@@ -101,7 +100,8 @@ def bag_of_words(s, words):
 def chat():
     print("\n")
     print("Welcome to the IT sollutions chatbot for printer issues.")
-    print("How can I help you? ex. My printer is jammed.")
+    print("How can I help you?")
+    print("example: My printer is jammed. (type quit to exit)")
     while True:
         inp = input("You: ")
         if inp.lower() == "quit":
