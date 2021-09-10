@@ -101,7 +101,7 @@ def chat():
     print("\n")
     print("Welcome to the IT sollutions chatbot for printer issues.")
     print("How can I help you?")
-    print("example: My printer is jammed. (type quit to exit)")
+    print("Example: My printer is jammed. (type quit to exit)")
     while True:
         inp = input("You: ")
         if inp.lower() == "quit":
