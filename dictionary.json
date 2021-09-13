@@ -56,7 +56,13 @@
     },
     {
       "tag": "printer paper jam",
-      "patterns": ["paper is jammed", "paper is stuck", "stuck paper"],
+      "patterns": [
+        "paper is jammed",
+        "paper is stuck",
+        "stuck paper",
+        "paper doesn't come out",
+        "paper trapped"
+      ],
       "responses": [
         "Turn off the printer. Inspect the location or tray the printed paper ejects to. If the stuck paper is visible manually remove it. Remove all paper trays and any paper that may be stuck between the tray and the printer. Open the printer door that allows you access to the printer ink cartridges or toner and look for any stuck paper. \nTurn the printer back on. \nIs there anything else I can do for you?"
       ],
